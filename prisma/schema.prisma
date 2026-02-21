@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String         @id @default(cuid())
+  name         String
+  email        String         @unique
+  passwordHash String         @map("password_hash")
+  createdAt    DateTime       @default(now()) @map("created_at")
+  appointments Appointment[]
+  prescriptions Prescription[]
+
+  @@map("users")
+}
+
+model Appointment {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  provider  String
+  datetime  DateTime
+  repeat    String   // weekly, monthly, etc.
+  endDate   DateTime? @map("end_date") // optional, for ending recurring
+
+  @@map("appointments")
+}
+
+model Prescription {
+  id             String    @id @default(cuid())
+  userId         String    @map("user_id")
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  medication     String
+  dosage         String
+  quantity       Int
+  refillOn       DateTime  @map("refill_on")
+  refillSchedule String    @map("refill_schedule") // e.g. monthly
+  endDate        DateTime? @map("end_date") // optional end for refills
+
+  @@map("prescriptions")
+}
