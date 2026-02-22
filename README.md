@@ -1,4 +1,4 @@
-# MediTrack
+# med.flow
 
 Mini-EMR and Patient Portal (Next.js, Prisma, PostgreSQL). Built for the Zealthy Full Stack Engineering Exercise.
 
