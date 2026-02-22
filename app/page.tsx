@@ -45,8 +45,8 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-6 bg-gradient-to-br from-primary-50 via-white to-slate-50">
-      <div className="w-full max-w-md card p-8 shadow-soft">
+    <main className="min-h-screen flex flex-col items-center justify-center px-4 py-6 sm:p-6 bg-gradient-to-br from-primary-50 via-white to-slate-50">
+      <div className="w-full max-w-md card p-6 shadow-soft sm:p-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-slate-900 tracking-tight">MediTrack</h1>
         </div>

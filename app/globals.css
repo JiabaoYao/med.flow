@@ -7,12 +7,13 @@
     --color-primary: 20 184 166;
     --color-primary-foreground: 255 255 255;
   }
-  /* Scale all text to 1.5x (rem-based sizes inherit this) */
   html {
     font-size: 110%;
+    -webkit-text-size-adjust: 100%;
   }
   body {
     @apply text-slate-800 bg-surface;
+    overflow-x: hidden;
   }
 }
 
