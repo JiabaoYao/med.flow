@@ -26,68 +26,70 @@ export default async function AdminPatientsPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Patients</h1>
-        <Link href="/admin/patients/new" className="btn-primary">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <h1 className="text-xl font-bold text-slate-900 tracking-tight sm:text-2xl">Patients</h1>
+        <Link href="/admin/patients/new" className="btn-primary w-fit">
           New patient
         </Link>
       </div>
-      <div className="mt-8 card overflow-hidden">
-        <table className="min-w-full divide-y divide-slate-200">
-          <thead className="bg-slate-50/80">
-            <tr>
-              <th className="px-5 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
-                Name
-              </th>
-              <th className="px-5 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
-                Email
-              </th>
-              <th className="px-5 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
-                Next upcoming appointment
-              </th>
-              <th className="px-5 py-4 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100 bg-white">
-            {users.map((user) => {
-              const occurrences = expandAppointments(
-                user.appointments.map((appt) => ({
-                  id: appt.id,
-                  provider: appt.provider,
-                  datetime: appt.datetime,
-                  repeat: appt.repeat,
-                  endDate: appt.endDate,
-                })),
-                NOW,
-                IN_3_MONTHS
-              );
-              const nextApp = occurrences[0] ?? null;
-              return (
-                <tr key={user.id} className="transition-colors hover:bg-primary-50/30">
-                  <td className="whitespace-nowrap px-5 py-4 text-sm font-medium text-slate-900">
-                    {user.name}
-                  </td>
-                  <td className="whitespace-nowrap px-5 py-4 text-sm text-slate-600">
-                    {user.email}
-                  </td>
-                  <td className="whitespace-nowrap px-5 py-4 text-sm text-slate-600">
-                    {nextApp ? formatDateTime(nextApp.datetime) : "—"}
-                  </td>
-                  <td className="whitespace-nowrap px-5 py-4 text-right text-sm">
-                    <Link
-                      href={`/admin/patients/${user.id}`}
-                      className="link-primary"
-                    >
-                      View
-                    </Link>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      <div className="mt-6 card overflow-hidden sm:mt-8">
+        <div className="overflow-x-auto -mx-px">
+          <table className="min-w-[32rem] w-full divide-y divide-slate-200">
+            <thead className="bg-slate-50/80">
+              <tr>
+                <th className="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 sm:px-5 sm:py-4">
+                  Name
+                </th>
+                <th className="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 sm:px-5 sm:py-4">
+                  Email
+                </th>
+                <th className="px-3 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 sm:px-5 sm:py-4">
+                  Next upcoming appointment
+                </th>
+                <th className="sticky right-0 min-w-[5rem] bg-slate-50/80 px-3 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500 sm:px-5 sm:py-4 shadow-[-4px_0_8px_-2px_rgba(0,0,0,0.06)]">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 bg-white">
+              {users.map((user) => {
+                const occurrences = expandAppointments(
+                  user.appointments.map((appt) => ({
+                    id: appt.id,
+                    provider: appt.provider,
+                    datetime: appt.datetime,
+                    repeat: appt.repeat,
+                    endDate: appt.endDate,
+                  })),
+                  NOW,
+                  IN_3_MONTHS
+                );
+                const nextApp = occurrences[0] ?? null;
+                return (
+                  <tr key={user.id} className="group transition-colors hover:bg-primary-50/30">
+                    <td className="whitespace-nowrap px-3 py-3 text-sm font-medium text-slate-900 sm:px-5 sm:py-4">
+                      {user.name}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-3 text-sm text-slate-600 sm:px-5 sm:py-4">
+                      {user.email}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-3 text-sm text-slate-600 sm:px-5 sm:py-4">
+                      {nextApp ? formatDateTime(nextApp.datetime) : "—"}
+                    </td>
+                    <td className="sticky right-0 min-w-[5rem] bg-white px-3 py-3 text-right text-sm shadow-[-4px_0_8px_-2px_rgba(0,0,0,0.06)] group-hover:bg-primary-50/30 sm:px-5 sm:py-4">
+                      <Link
+                        href={`/admin/patients/${user.id}`}
+                        className="link-primary inline-block py-1"
+                      >
+                        View
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
